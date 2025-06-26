@@ -2,5 +2,13 @@
   "name": "itch-jam-to-calendar",
   "version": "1.0.0",
   "description": "Add calendar buttons to itch.io game jams.",
-  "main": "index.js"
+  "main": "index.js",
+  "scripts": {
+    "build": "web-ext build",
+    "sign": "web-ext sign --api-key=$AMO_API_KEY --api-secret=$AMO_API_SECRET"
+  },
+  "devDependencies": {
+    "chrome-webstore-upload": "^3.1.4",
+    "web-ext": "^8.8.0"
+  }
 }

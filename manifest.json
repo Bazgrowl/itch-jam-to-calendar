@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Itch.io Jam Calendar Buttons",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "Add calendar buttons to itch.io game jams.",
   "permissions": [],
   "host_permissions": [

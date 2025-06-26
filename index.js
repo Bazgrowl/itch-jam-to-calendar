@@ -3,7 +3,7 @@ const icsFormat = (date) => date
     .replace(/[-:]/g, '')
     .split('.')[0] + 'Z';
 
-function openGoogleCalendar({ title, description, start, end, location }) {
+function openGoogleCalendar({title, description, start, end, location}) {
     const url = new URL('https://calendar.google.com/calendar/render');
     url.searchParams.set('action', 'TEMPLATE');
     url.searchParams.set('text', title);
@@ -13,7 +13,8 @@ function openGoogleCalendar({ title, description, start, end, location }) {
 
     window.open(url.toString(), '_blank');
 }
-function openOutlookCalendar({ title, description, start, end, location }) {
+
+function openOutlookCalendar({title, description, start, end, location}) {
     const url = new URL('https://outlook.live.com/calendar/0/deeplink/compose');
     url.searchParams.set('subject', title);
     url.searchParams.set('body', description);
@@ -34,26 +35,28 @@ function download(filename, fileBody) {
     document.body.removeChild(element);
 }
 
-function createDownloadICSFile({ title, description, start, end, location }) {
-    const icsBody = 'BEGIN:VCALENDAR\n' +
-        'VERSION:2.0\n' +
-        'PRODID:Calendar\n' +
-        'CALSCALE:GREGORIAN\n' +
-        'METHOD:PUBLISH\n' +
-        'BEGIN:VTIMEZONE\n' +
-        'END:VTIMEZONE\n' +
-        'BEGIN:VEVENT\n' +
-        'SUMMARY:' + title + '\n' +
-        'UID:@Default\n' +
-        'SEQUENCE:0\n' +
-        'STATUS:CONFIRMED\n' +
-        'TRANSP:TRANSPARENT\n' +
-        'DTSTART:' + icsFormat(start) + '\n' +
-        'DTEND:' + icsFormat(end)+ '\n' +
-        'LOCATION:' + location + '\n' +
-        'DESCRIPTION:' + description + '\n' +
-        'END:VEVENT\n' +
-        'END:VCALENDAR\n';
+function createDownloadICSFile({title, description, start, end, location}) {
+    const icsBody = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:Calendar',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH',
+        'BEGIN:VTIMEZONE',
+        'END:VTIMEZONE',
+        'BEGIN:VEVENT',
+        'SUMMARY:' + title,
+        'UID:@Default',
+        'SEQUENCE:0',
+        'STATUS:CONFIRMED',
+        'TRANSP:TRANSPARENT',
+        'DTSTART:' + icsFormat(start),
+        'DTEND:' + icsFormat(end),
+        'LOCATION:' + location,
+        'DESCRIPTION:' + description,
+        'END:VEVENT',
+        'END:VCALENDAR'
+    ].join('\n');
 
     download(title + '.ics', icsBody);
 }
@@ -79,7 +82,7 @@ function parseJamDates(text) {
         throw new Error("Invalid date format");
     }
 
-    return { start: startDate, end: endDate }
+    return {start: startDate, end: endDate}
 }
 
 
