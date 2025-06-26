@@ -84,14 +84,14 @@ function parseJamDates(text) {
 
 
 function insertCalendarButtons() {
-    const el = document.querySelector('.date_data');
-    if (!el) return;
+    const dateDataElement = document.querySelector('.date_data');
+    if (!dateDataElement) return;
 
-    const text = el.textContent.trim();
+    const dateTextValue = dateDataElement.textContent.trim();
     let dates;
 
     try {
-        dates = parseJamDates(text);
+        dates = parseJamDates(dateTextValue);
     } catch (e) {
         console.error('Failed to parse jam dates:', e);
         return;
@@ -101,11 +101,12 @@ function insertCalendarButtons() {
     btnContainer.style.marginTop = '10px';
     btnContainer.style.display = 'flex';
     btnContainer.style.justifyContent = 'center';
+    btnContainer.style.alignItems = 'center';
     btnContainer.style.gap = '8px';
 
     const payload = {
         title: document.querySelector('.jam_title_header a')?.textContent ?? document.title,
-        description: `Game jam from ${window.location.origin + window.location.pathname}`,
+        description: `${window.location.origin + window.location.pathname}`,
         start: dates.start,
         end: dates.end,
         location: "Online"
@@ -114,20 +115,19 @@ function insertCalendarButtons() {
     const makeButton = (label, onClick) => {
         const btn = document.createElement('button');
         btn.textContent = label;
-        btn.style.padding = '6px 10px';
-        btn.style.cursor = 'pointer';
-        btn.style.border = '1px solid #888';
-        btn.style.borderRadius = '4px';
-        btn.style.background = '#f1f1f1';
+        btn.classList.add('button'); // use jam's page button style
         btn.onclick = () => onClick(payload);
         return btn;
     };
 
-    btnContainer.appendChild(makeButton('🗓 Google Calendar', openGoogleCalendar));
-    btnContainer.appendChild(makeButton('📧 Outlook', openOutlookCalendar));
-    btnContainer.appendChild(makeButton('📥 Apple / .ics', createDownloadICSFile));
+    var addToCalendar = document.createElement("div")
+    addToCalendar.textContent = "Add to Calendar: "
+    btnContainer.appendChild(addToCalendar)
+    btnContainer.appendChild(makeButton('Google', openGoogleCalendar));
+    btnContainer.appendChild(makeButton('Outlook', openOutlookCalendar));
+    btnContainer.appendChild(makeButton('iCloud / .ics', createDownloadICSFile));
 
-    el.parentNode.insertBefore(btnContainer, el.nextSibling);
+    dateDataElement.parentNode.insertBefore(btnContainer, dateDataElement.nextSibling);
 }
 
 window.addEventListener('load', insertCalendarButtons);
