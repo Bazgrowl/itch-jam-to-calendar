@@ -1,0 +1,6 @@
+{
+  "name": "itch-jam-to-calendar",
+  "version": "1.0.0",
+  "description": "Add calendar buttons to itch.io game jams.",
+  "main": "index.js"
+}
